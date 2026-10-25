@@ -48,14 +48,14 @@ form.addEventListener('submit',async event=>{
   payload['Дата']=date.value||'Дату согласуем лично';
   payload['Часовой пояс']='Europe/Berlin — местное время Германии';
   const body=`Привет, Даник! Хочу на прогулку.\n\nГород: ${payload['Город']}\nДень: ${payload['День недели']}\nДата: ${payload['Дата']}\nВремя: ${payload['Время']} (по Германии)\nПожелание: ${payload['Пожелание']||'Пока нет'}\n\nДо встречи!`;
-  fallback.href='mailto:danko.penko@gmail.com?subject='+encodeURIComponent('Есть планы на прогулку ♡')+'&body='+encodeURIComponent(body);
+  fallback.href='mailto:danko.penko@gmail.com?subject='+encodeURIComponent('Есть планы на прогулку')+'&body='+encodeURIComponent(body);
   fallback.hidden=true;button.disabled=true;button.textContent='Отправляю приглашение…';status.textContent='';
   const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),20000);
   try{
     const response=await fetch('https://formsubmit.co/ajax/danko.penko@gmail.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload),signal:controller.signal});
     const result=await response.json();
     if(!response.ok||!(result.success===true||result.success==='true'))throw new Error('Submission rejected');
-    submitted=true;status.textContent='Заявка принята ♡ Теперь осталось договориться о встрече. Если хочется, напиши Данику и в вашем чате.';button.textContent='До встречи на прогулке ♡';
+    submitted=true;status.textContent='Заявка принята. Теперь осталось договориться о встрече. Если хочется, напиши Данику и в вашем чате.';button.textContent='До встречи на прогулке';
   }catch(error){
     status.textContent='Не удалось подтвердить отправку. Можно попробовать ещё раз или отправить готовое письмо через свою почту.';
     fallback.hidden=false;button.innerHTML=original;button.disabled=false;
